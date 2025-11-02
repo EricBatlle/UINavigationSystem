@@ -1,0 +1,27 @@
+{
+    "name": "UINavigation.DoTween",
+    "rootNamespace": "UINavigation.DoTween",
+    "references": [
+        "NavigationSystem",
+        "UniTask",
+        "UniTask.DOTween",
+        "DOTween.Modules"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "DOTWEEN"
+    ],
+    "versionDefines": [
+        {
+            "name": "Select...",
+            "expression": "",
+            "define": ""
+        }
+    ],
+    "noEngineReferences": false
+}

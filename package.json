@@ -1,0 +1,17 @@
+{
+  "name": "com.ericbatlle.ui-navigation-system",
+  "version": "1.0.0",
+  "displayName": "UINavigationToolkit",
+  "description": "UINavigationToolkit",
+  "unity": "2020.3",
+  "dependencies": {
+    "com.cysharp.unitask": "2.5.10"
+  },
+  "author": {
+    "name": "Eric Batlle Clavero",
+    "email": "ebatlleclavero@gmail.com",
+    "url": "https://github.com/EricBatlle"
+  }
+}
+
+

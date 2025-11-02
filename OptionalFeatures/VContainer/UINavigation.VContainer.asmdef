@@ -1,0 +1,25 @@
+{
+    "name": "UINavigation.VContainer",
+    "rootNamespace": "UINavigation.VContainer",
+    "references": [
+        "NavigationSystem",
+        "VContainer"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UINAVIGATIONSYSTEM_VCONTAINER"
+    ],
+    "versionDefines": [
+        {
+            "name": "jp.hadashikick.vcontainer",
+            "expression": "1.17.0",
+            "define": "UINAVIGATIONSYSTEM_VCONTAINER"
+        }
+    ],
+    "noEngineReferences": false
+}
