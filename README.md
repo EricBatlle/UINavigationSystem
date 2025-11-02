@@ -50,7 +50,7 @@ But if you just want to donate straightforward, I also have [PayPal.me](https://
     }
 ]
 ```
-- Install UI Navigation System using the Git URL: https://github.com/EricBatlle/NavigationSystem
+- Install UI Navigation System using the Git URL: https://github.com/EricBatlle/UINavigationSystem.git
   - Remember that a scripting define symbol ``UNITASK_DOTWEEN_SUPPORT`` will be added automatically if [DoTween](#dotween) is detected.
 
 ## ⚙️ How to Use
