@@ -67,7 +67,7 @@ public static class ViewIds
   - Notice that you can create your own implementation of ``IViewsFactory``, for example the one used to work with VContainer [explained here](#VContainer).
 ```csharp
 IViewsFactory viewsFactory = new DefaultViewsFactory();
-navigationSystem = new NavigationSystem.NavigationSystem(viewsContainer, viewsFactory, rootCanvasTransform);
+navigationSystem = new UINavigationSystem(viewsContainer, viewsFactory, rootCanvasTransform);
 ```
 - Create the prefab you want to use as View
   - By default, UI Navigation System will auto-attach a ``DefaultView`` script unless you [add your own](#how-to-create-your-own-views)
@@ -77,9 +77,9 @@ Now you are ready to consume this navigation system inside your services.
 ```csharp
 public class FlowService
 {
-    private readonly NavigationSystem.NavigationSystem navigationSystem;
+    private readonly UINavigationSystem navigationSystem;
 
-    public SomeService(NavigationSystem.NavigationSystem navigationSystem)
+    public SomeService(UINavigationSystem navigationSystem)
     {
         this.navigationSystem = navigationSystem;
     }
@@ -248,9 +248,9 @@ and use it like:
 ```csharp
 public class FlowService
 {
-    private readonly NavigationSystem.NavigationSystem navigationSystem;
+    private readonly UINavigationSystem navigationSystem;
 
-    public SomeService(NavigationSystem.NavigationSystem navigationSystem)
+    public SomeService(UINavigationSystem navigationSystem)
     {
         this.navigationSystem = navigationSystem;
     }
@@ -318,7 +318,7 @@ public class BootstrapLifeTime : LifetimeScope
 
     protected override void Configure(IContainerBuilder builder)
     {
-        new NavigationSystemInstaller(rootCanvasTransform, viewsContainer).Install(builder);
+        new UINavigationSystemInstaller(rootCanvasTransform, viewsContainer).Install(builder);
     }
 }
 ```

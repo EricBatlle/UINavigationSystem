@@ -4,12 +4,12 @@ using VContainer.Unity;
 
 namespace UINavigation.VContainer
 {
-	public class NavigationSystemInstaller : IInstaller
+	public class UINavigationSystemInstaller : IInstaller
 	{
 		private readonly Transform rootCanvas;
 		private readonly ViewsContainer viewsContainer;
 
-		public NavigationSystemInstaller(Transform rootCanvas, ViewsContainer viewsContainer)
+		public UINavigationSystemInstaller(Transform rootCanvas, ViewsContainer viewsContainer)
 		{
 			this.rootCanvas = rootCanvas;
 			this.viewsContainer = viewsContainer;
