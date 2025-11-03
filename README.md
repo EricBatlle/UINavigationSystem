@@ -13,7 +13,7 @@ It works under a single Canvas and integrates seamlessly with [UniTask](https://
 ## Donations are appreciated! 💸
 *Remember that are many ways to say thank you.*
 
-If this timer has been helpful, remember to star the repository and consider buying me a coffee! 😀
+If this package has been helpful, remember to star the repository and consider buying me a coffee! 😀
 <p>
 <a href="https://www.buymeacoffee.com/ebatlleclavero" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" width="144.6" height="34"></a>
 </p>
@@ -34,7 +34,7 @@ But if you just want to donate straightforward, I also have [PayPal.me](https://
 
 ## 🔗Dependencies
 - This package depends on [UniTask](https://github.com/Cysharp/UniTask) to create 0 allocations when creating Tasks.
-  - If you don't know how to work with it, please check out respective docs first.
+  - If you don't know how to work with it, please check out its documentation first.
 
 ## 🛠️ How to Install 
 - Update scope registry by adding this to your project manifest.json:
@@ -55,7 +55,7 @@ But if you just want to donate straightforward, I also have [PayPal.me](https://
 
 ## ⚙️ How to Use
 - Create at least one ``ViewsContainer`` ScriptableObject, right click -> Create/ScriptableObject/ViewsContainer
-- Create one class to hold your view Ids and add to it the ``[ViewsContainer]`` attribute:
+- Create one class to hold your view Ids and add the ``[ViewsContainer]`` attribute to it:
 ```csharp
 [ViewIdsContainer]
 public static class ViewIds
@@ -71,7 +71,8 @@ navigationSystem = new UINavigationSystem(viewsContainer, viewsFactory, rootCanv
 ```
 - Create the prefab you want to use as View
   - By default, UI Navigation System will auto-attach a ``DefaultView`` script unless you [add your own](#how-to-create-your-own-views)
-- Add one entry inside ViewsContainer by adding both Id and the associated prefab (your view prefab)
+- Add one entry inside ViewsContainer by adding both the Id and the associated prefab (your view prefab)
+  - Thanks to this system, Id selection is a dropdown even if using strings to serialize those Id's, this makes your system less error prone
 
 Now you are ready to consume this navigation system inside your services.
 ```csharp
@@ -79,7 +80,7 @@ public class FlowService
 {
     private readonly UINavigationSystem navigationSystem;
 
-    public SomeService(UINavigationSystem navigationSystem)
+    public FlowService(UINavigationSystem navigationSystem)
     {
         this.navigationSystem = navigationSystem;
     }
@@ -157,6 +158,7 @@ public async UniTask Execute()
 
 ## 🔁 Getting Results from Views
 Imagine that you have a confirmation view, and you want to write a Flow class for it.
+
 There are multiple ways to approach this scenario, but for the sake of the explanation let's extend from ``IViewWithResult<TViewResult>``, like:
 ```csharp
 public class LoseView : BaseView,  IViewWithResult<bool>
@@ -207,7 +209,7 @@ public async UniTask ExecuteSequentially()
 }
 ```
 ## 🧬 Everything at once
-Since [those behaviours](#-passing-data-to-views) are added through composition, not inheritance, you can combine them, and for example create a view that accepts a [dynamic data](#-passing-data-to-views), and also [returns a value](#-getting-results-from-views).
+Since [those behaviours](#-passing-data-to-views) are added through composition, not inheritance, you can combine them, and for example create a view that accepts both, [dynamic data](#-passing-data-to-views), and also [returns a value](#-getting-results-from-views).
 ```csharp
 public class LoseView : BaseView, IViewWithData<float>, IViewWithResult<bool>
 {
@@ -304,10 +306,10 @@ Note: View transitions are build as MonoBehaviours to make it easy to tweak from
 
 # 🔌Optional Integrations
 
-All this features are automatically enabled by default if you are using those third party plugins, and if you are not, they will be unlocked automatically once you add them.
+Following features are automatically enabled by default if you are using those third party plugins, and if you are not, they will be unlocked automatically once you add them.
 
 ## 📦 [VContainer](https://github.com/hadashiA/VContainer)
-If you are using [VContainer](https://github.com/hadashiA/VContainer), in your project, this UINavigationSystem offers some utilities to bind the navigation system easily as follow:
+If you are using [VContainer](https://github.com/hadashiA/VContainer) in your project, this UINavigationSystem offers some utilities to bind the navigation system easily as follow:
 - Bind NavigationSystem into your ``LifetimeScope``.
   - This requires a reference to which transform you want your views to be instantiated, and the reference to the ViewContainer to use in this context.
 ```csharp
