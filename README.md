@@ -1,4 +1,4 @@
-# UI Navigation System 🔀
+# 🔀 UI Navigation System 
 A lightweight and async-friendly UI navigation system for Unity.
 
 Designed with mobile games in mind, UI Navigation System makes it easy to create, open, close, and sequence views (such as screens and popups) programmatically — all while keeping your game logic clean and testable.
@@ -10,7 +10,7 @@ await navigationSystem.CreateView(ViewIds.Game).Show().AwaitClose();
 
 It works under a single Canvas and integrates seamlessly with [UniTask](https://github.com/Cysharp/UniTask), with optional support for [DoTween](#dotween), [VContainer](#vcontainer) and [Tri-Inspector](#tri-inspector).
 
-## Donations are appreciated! 💸
+## 💸 Donations are appreciated! 
 *Remember that are many ways to say thank you.*
 
 If this package has been helpful, remember to star the repository and consider buying me a coffee! 😀

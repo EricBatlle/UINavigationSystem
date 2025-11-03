@@ -19,14 +19,14 @@ namespace UINavigation
 			cts?.Cancel();
 			cts?.Dispose();
 			cts = new CancellationTokenSource();
-			var token = cts.Token;
+			var cancellationToken = cts.Token;
 
 			target.localScale = Vector3.zero;
 
 			var time = 0f;
 			while (time < duration)
 			{
-				if (token.IsCancellationRequested)
+				if (cancellationToken.IsCancellationRequested)
 				{
 					return;
 				}
@@ -34,7 +34,7 @@ namespace UINavigation
 				var t = time / duration;
 				target.localScale = Vector3.LerpUnclamped(Vector3.zero, Vector3.one, easeIn.Evaluate(t));
 				time += Time.deltaTime;
-				await UniTask.Yield(PlayerLoopTiming.Update);
+				await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
 			}
 
 			target.localScale = Vector3.one;

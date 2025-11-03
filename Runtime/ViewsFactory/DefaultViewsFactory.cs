@@ -19,7 +19,7 @@ namespace UINavigation
 		{
 			if (viewPrefab == null)
 			{
-				Debug.LogError("DefaultViewsFactory.Create: viewPrefab es null");
+				Debug.LogError("DefaultViewsFactory.Create: viewPrefab is null");
 				return null;
 			}
 
