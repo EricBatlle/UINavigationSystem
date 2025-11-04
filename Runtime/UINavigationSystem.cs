@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -9,6 +10,7 @@ namespace UINavigation
         private readonly ViewsContainer viewsContainer;
         private readonly IViewsFactory viewsFactory;
         private readonly Transform rootCanvas;
+        private readonly Dictionary<IView, ViewHandle> viewsMap = new();
 
         public UINavigationSystem(ViewsContainer viewsContainer, IViewsFactory viewsFactory, Transform rootCanvas)
         {
@@ -40,21 +42,32 @@ namespace UINavigation
                 view = go.AddComponent<DefaultView>();
             }
 
-            return new ViewHandle(go, view);
+            var viewHandle = new ViewHandle(go, view);
+            viewsMap[view] = viewHandle;
+            return viewHandle;
         }
 
         public async UniTask Close(IView view, bool immediate = false)
         {
-            await view.Close(immediate);
-            await view.AwaitCloseComplete;
-            if (view is Component component && component != null)
-            {
-                Object.Destroy(component.gameObject);
-            }
-            else
+            if (view is not Component component || component == null)
             {
                 Debug.LogError($"{view} is not a Component, can't destroy its GameObject automatically");
+                return;
             }
+
+            await view.OnBeforeClose();
+
+            if (viewsMap.TryGetValue(view, out var viewHandle))
+            {
+                if (!immediate && viewHandle.GameObject && viewHandle.GameObject.TryGetComponent<ICloseViewTransition>(out var close))
+                {
+                    await close.AnimateClose(viewHandle.GameObject.transform);
+                }
+                viewHandle.MarkViewAsClosed();
+            }
+
+            Object.Destroy(component.gameObject);
+            viewsMap.Remove(view);
         }
     }
 }

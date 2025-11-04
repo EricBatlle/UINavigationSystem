@@ -36,20 +36,23 @@ But if you just want to donate straightforward, I also have [PayPal.me](https://
 - This package depends on [UniTask](https://github.com/Cysharp/UniTask) to create 0 allocations when creating Tasks.
   - If you don't know how to work with it, please check out its documentation first.
 
-## 🛠️ How to Install 
-- Update scope registry by adding this to your project manifest.json:
-  - This will allow UniTask to be installed automatically through OpenUPM
-```json
-"scopedRegistries": [
-    {
-        "name": "OpenUPM",
-        "url": "https://package.openupm.com",
-        "scopes": [
-            "com.cysharp"
-        ]
-    }
-]
-```
+## 🛠️ How to Install
+- Since this package depends on [UniTask](https://github.com/Cysharp/UniTask), you have two approaches:
+  - 1st Approach: Install UniTask package first, [more info in their documentation on how to Get Started](https://github.com/Cysharp/UniTask?tab=readme-ov-file#getting-started)
+  - 2nd Approach: Let the UI Navigation System package install UniTask when installing UI Navigation System pacakge.
+    - For that you need to update your project scope registry by adding this to your project manifest.json (you can find this file inside your Packages folder):
+      - This will allow UniTask to be installed automatically through OpenUPM
+    ```json
+    "scopedRegistries": [
+        {
+            "name": "OpenUPM",
+            "url": "https://package.openupm.com",
+            "scopes": [
+                "com.cysharp"
+            ]
+        }
+    ]
+    ```
 - Install UI Navigation System using the Git URL: https://github.com/EricBatlle/UINavigationSystem.git
   - Remember that a scripting define symbol ``UNITASK_DOTWEEN_SUPPORT`` will be added automatically if [DoTween](#dotween) is detected.
 
@@ -115,14 +118,14 @@ This component is designed to be your View entry point, where you can add extend
 ```csharp
 public class LoseView : BaseView
 {
-      [Header(nameof(LoseView))]
-      [SerializeField]
-      private Button closeButton;
-      
-      private void Awake()
-      {
-          closeButton.onClick.AddListener(() => Close());
-      }
+    [Header(nameof(LoseView))]
+    [SerializeField]
+    private Button button;
+  
+    private void Awake()
+    {
+        button.onClick.AddListener(() => Debug.LogWarning("Button Pressed"));
+    }
 }
 ```
 ## 📦 Passing Data to Views
@@ -171,20 +174,20 @@ public class LoseView : BaseView,  IViewWithResult<bool>
 
     public UniTask<bool> AwaitResult => resultTcs.Task;
     private readonly UniTaskCompletionSource<bool> resultTcs = new();
-    
+
     private void Awake()
     {
         confirmButton.onClick.AddListener(() => resultTcs.TrySetResult(true));
         declineButton.onClick.AddListener(() => resultTcs.TrySetResult(false));
     }
 
-    public override UniTask Close(bool immediate = false)
+    public override UniTask OnBeforeClose()
     {
         if (resultTcs.Task.Status == UniTaskStatus.Pending)
         {
             resultTcs.TrySetResult(false);
         }
-        return base.Close(immediate);
+        return base.OnBeforeClose();
     }
 }
 ```
@@ -213,58 +216,48 @@ Since [those behaviours](#-passing-data-to-views) are added through composition,
 ```csharp
 public class LoseView : BaseView, IViewWithData<float>, IViewWithResult<bool>
 {
-      [Header(nameof(LoseView))]
-      [SerializeField]
-      private Button confirmButton;
-      [SerializeField]
-      private Button declineButton;
-      [SerializeField]
-      private TextMeshProUGUI scoreText;
-      
-      private float userScore;
-      public UniTask<bool> AwaitResult => resultTcs.Task;
-      private readonly UniTaskCompletionSource<bool> resultTcs = new();
-      
-      private void Awake()
-      {
-          confirmButton.onClick.AddListener(() => resultTcs.TrySetResult(true));
-          declineButton.onClick.AddListener(() => resultTcs.TrySetResult(false));
-      }
-      
-      public void SetData(float userScore)
-      {
-          scoreText.text = userScore.ToString();
-      }
-      
-      public override UniTask Close(bool immediate = false)
-      {
-          if (resultTcs.Task.Status == UniTaskStatus.Pending)
-          {
-              resultTcs.TrySetResult(false);
-          }
-          return base.Close(immediate);
-      }
+    [Header(nameof(LoseView))]
+    [SerializeField]
+    private Button confirmButton;
+    [SerializeField]
+    private Button declineButton;
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
+  
+    private float userScore;
+    public UniTask<bool> AwaitResult => resultTcs.Task;
+    private readonly UniTaskCompletionSource<bool> resultTcs = new();
+  
+    private void Awake()
+    {
+        confirmButton.onClick.AddListener(() => resultTcs.TrySetResult(true));
+        declineButton.onClick.AddListener(() => resultTcs.TrySetResult(false));
+    }
+  
+    public void SetData(float userScore)
+    {
+        scoreText.text = userScore.ToString();
+    }
+  
+    public override UniTask OnBeforeClose()
+    {
+        if (resultTcs.Task.Status == UniTaskStatus.Pending)
+        {
+            resultTcs.TrySetResult(false);
+        }
+        return base.OnBeforeClose();
+    }
 }
 ```
 and use it like:
 ```csharp
-public class FlowService
+public async UniTask Execute()
 {
-    private readonly UINavigationSystem navigationSystem;
-
-    public SomeService(UINavigationSystem navigationSystem)
-    {
-        this.navigationSystem = navigationSystem;
-    }
-
-    public async UniTask Execute()
-    {
-        // This will open the view with a value of 10, AND return the result once the view is closed
-        var isConfirmed = await navigationSystem.CreateView(ViewIds.Lose)
-            .WithData(10)
-            .Show()
-            .AwaitCloseResult<bool>();
-    }
+    // This will open the view with a value of 10, AND return the result once the view is closed
+    var isConfirmed = await navigationSystem.CreateView(ViewIds.Lose)
+        .WithData(10)
+        .Show()
+        .AwaitCloseResult<bool>();
 }
 ```
 

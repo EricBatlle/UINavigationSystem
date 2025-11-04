@@ -10,7 +10,8 @@ namespace UINavigation
 		public IView View { get; }
 
 		private bool isShowing;
-		
+		private readonly UniTaskCompletionSource closedTcs = new();
+
 		public ViewHandle(GameObject go, IView view)
 		{
 			GameObject = go;
@@ -32,8 +33,6 @@ namespace UINavigation
 			throw new InvalidOperationException($"View '{GameObject.name}' does not implement {typeof(TCapability).Name}.");
 		}
 
-		public UniTask AwaitClose() => View.AwaitCloseComplete;
-		
 		public async UniTask<ViewHandle> Show()
 		{
 			if (isShowing)
@@ -41,17 +40,18 @@ namespace UINavigation
 				return this;
 			}
 
-			if (GameObject.TryGetComponent<IOpenViewTransition>(out var open))
+			if (GameObject && GameObject.TryGetComponent<IOpenViewTransition>(out var open))
 			{
-				if (GameObject)
-				{
-					isShowing = true;
-					await open.AnimateOpen(GameObject.transform);
-				}
+				isShowing = true;
+				await open.AnimateOpen(GameObject.transform);
 			}
 
 			isShowing = false;
+			View.OnOpenComplete();
 			return this;
 		}
+		
+		public UniTask AwaitClose() => closedTcs.Task;
+		internal void MarkViewAsClosed() => closedTcs.TrySetResult();
 	}
 }

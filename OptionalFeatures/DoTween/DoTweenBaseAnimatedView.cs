@@ -34,15 +34,5 @@ namespace UINavigation.DoTween
 
 			return closeTransition.Animate(target);
 		}
-
-		public override async UniTask Close(bool immediate = false)
-		{
-			if (!immediate)
-			{
-				await AnimateClose(gameObject.transform);
-			}
-			
-			await base.Close(immediate);
-		}
 	}
 }
