@@ -47,6 +47,11 @@ namespace UINavigation
             return viewHandle;
         }
 
+        public async UniTask Close(ViewHandle viewHandle, bool immediate = false)
+        {
+            await Close(viewHandle.View);
+        }
+
         public async UniTask Close(IView view, bool immediate = false)
         {
             if (view is not Component component || component == null)
