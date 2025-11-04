@@ -49,7 +49,7 @@ namespace UINavigation
 
         public async UniTask Close(ViewHandle viewHandle, bool immediate = false)
         {
-            await Close(viewHandle.View);
+            await Close(viewHandle.View, immediate);
         }
 
         public async UniTask Close(IView view, bool immediate = false)

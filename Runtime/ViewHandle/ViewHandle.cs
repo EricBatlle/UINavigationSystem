@@ -47,7 +47,7 @@ namespace UINavigation
 			}
 
 			isShowing = false;
-			View.OnOpenComplete();
+			await View.OnOpenComplete();
 			return this;
 		}
 		

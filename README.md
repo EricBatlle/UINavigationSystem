@@ -5,7 +5,9 @@ Designed with mobile games in mind, UI Navigation System makes it easy to create
 
 ```csharp
 await navigationSystem.CreateView(ViewIds.MainMenu).Show().AwaitClose();
-await navigationSystem.CreateView(ViewIds.Game).Show().AwaitClose();
+var viewHandle = await navigationSystem.CreateView(ViewIds.Game).Show();
+// Do Something
+await navigationSystem.Close(handleView);
 ```
 
 It works under a single Canvas and integrates seamlessly with [UniTask](https://github.com/Cysharp/UniTask), with optional support for [DoTween](#dotween), [VContainer](#vcontainer) and [Tri-Inspector](#tri-inspector).
