@@ -319,6 +319,7 @@ public class BootstrapLifeTime : LifetimeScope
     }
 }
 ```
+Remember that to use UINavigationSystemInstaller your BootstrapLifeTime assembly will require to know ``UINavigation.VContainer`` assembly. 
 Notice that the ``IViewFactory`` is not the default one as explained at the beginning, but instead it uses a ``VContainerViewsFactory`` that will take care for you the binding between lifetimescopes and contexts.
 
 ## 🎬 [DoTween](https://github.com/Demigiant/dotween)
