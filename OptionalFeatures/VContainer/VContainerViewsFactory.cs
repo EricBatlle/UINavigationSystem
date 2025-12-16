@@ -34,6 +34,8 @@ namespace UINavigation.VContainer
 
 			ViewsFactoryUtils.AdjustUI(viewPrefab, parentTransform, instanceGameObject);
 
+			instanceScope.Container.InjectGameObject(instanceGameObject);
+
 			return instanceGameObject;
 		}
 	}

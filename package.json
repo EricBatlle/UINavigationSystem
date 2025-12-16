@@ -1,9 +1,12 @@
 {
   "name": "com.ericbatlle.ui-navigation-system",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "UINavigationToolkit",
   "description": "UINavigationToolkit",
   "unity": "2020.3",
+  "documentationUrl": "https://github.com/EricBatlle/UINavigationSystem#readme",
+  "changelogUrl": "https://github.com/EricBatlle/UINavigationSystem/releases",
+  "licensesUrl": "https://github.com/EricBatlle/UINavigationSystem/blob/main/LICENSE",
   "dependencies": {
     "com.cysharp.unitask": "2.5.10"
   },
