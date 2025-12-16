@@ -23,7 +23,7 @@ namespace UINavigation.VContainer
 			}
 
 			var instance = Object.Instantiate(viewPrefab, parentTransform, false);
-			resolver.Inject(instance);
+			resolver.InjectGameObject(instance);
 			return instance;
 		}
 		
